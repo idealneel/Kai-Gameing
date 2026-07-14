@@ -248,7 +248,10 @@ body {
 }
 @media (max-width: 640px) {
   .gallery-scale {
-    transform: scale(0.55);
+    width: 142.857%;
+    left: -21.4285%;
+    right: auto;
+    transform: scale(0.7);
   }
 }
 

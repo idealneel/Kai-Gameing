@@ -35,7 +35,7 @@ function PriceCard({ icon: Icon, name, time, price, unit, description, games, hi
       style={{ transition: 'transform 0.15s ease-out, box-shadow 0.15s ease-out' }}
     >
       {highlight && (
-        <div className="bg-kai-red text-kai-ink text-xs font-bold uppercase tracking-widest px-3 py-1 mb-4 inline-block border-3 border-kai-ink shadow-neo-sm -rotate-2">
+        <div className="bg-kai-red text-kai-ink text-xs font-bold uppercase tracking-widest px-3 py-1 mb-4 inline-block border-3 border-kai-ink shadow-neo-sm">
           Best Value
         </div>
       )}

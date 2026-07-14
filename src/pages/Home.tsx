@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Gamepad2, Clock, Star, ArrowRight } from 'lucide-react';
 import { useInView } from '../hooks/useInView';
@@ -22,11 +23,20 @@ export default function Home() {
   const [stationsRef, stationsInView] = useInView(0.1);
   const [pricingRef, pricingInView] = useInView(0.1);
   const [statsRef, statsInView] = useInView(0.1);
+  const [isMobile, setIsMobile] = useState(() =>
+    typeof window !== 'undefined' && window.matchMedia('(max-width: 640px)').matches
+  );
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 640px)');
+    const onChange = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    mq.addEventListener('change', onChange);
+    return () => mq.removeEventListener('change', onChange);
+  }, []);
 
   return (
     <div>
       {/* Hero */}
-      <section ref={heroRef} className="relative min-h-[90vh] bg-kai-dark overflow-hidden hero-grid">
+      <section ref={heroRef} className="relative min-h-[90vh] bg-kai-dark overflow-hidden hero-grid -mt-20 sm:mt-0">
 
         {/* Background image */}
         <div className="absolute inset-0" style={{ zIndex: 0 }}>
@@ -55,7 +65,7 @@ export default function Home() {
               { image: '/assets/games/cricket-24.png', text: 'Cricket 24' },
               { image: '/assets/games/asphalt-racing.png', text: 'Asphalt Racing' },
             ]}
-            bend={3}
+            bend={isMobile ? 0 : 3}
             textColor="#ffffff"
             borderRadius={0.05}
             scrollEase={0.02}
@@ -82,7 +92,7 @@ export default function Home() {
         </div>
 
         {/* Seamless blur transition into next section */}
-        <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-b from-transparent to-kai-deeper" style={{ zIndex: 11, backdropFilter: 'blur(1px)' }} />
+        <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-b from-transparent to-kai-deeper" style={{ zIndex: 11, backdropFilter: 'blur(0.5px)' }} />
       </section>
 
       {/* Stations */}
