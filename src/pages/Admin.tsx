@@ -22,7 +22,7 @@ export default function Admin() {
   const [toast, setToast] = useState<{ msg: string; type: 'success' | 'error' } | null>(null);
   const [calendarDate, setCalendarDate] = useState(() => {
     const d = new Date();
-    return d.toISOString().split('T')[0];
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
   });
   const [refreshKey, setRefreshKey] = useState(0);
 
@@ -138,8 +138,14 @@ export default function Admin() {
   // Calendar helpers
   const calDate = new Date(calendarDate + 'T00:00:00');
   const calendarBookings = bookings.filter((b) => b.date === calendarDate);
-  const prevDay = () => { const d = new Date(calendarDate + 'T00:00:00'); d.setDate(d.getDate() - 1); setCalendarDate(d.toISOString().split('T')[0]); };
-  const nextDay = () => { const d = new Date(calendarDate + 'T00:00:00'); d.setDate(d.getDate() + 1); setCalendarDate(d.toISOString().split('T')[0]); };
+  const sortedStations = [...stations].sort((a, b) => {
+    const na = parseInt(a.name.match(/\d+/)?.[0] ?? '0', 10);
+    const nb = parseInt(b.name.match(/\d+/)?.[0] ?? '0', 10);
+    return na - nb || a.name.localeCompare(b.name);
+  });
+  const toLocalISO = (d: Date) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+  const prevDay = () => { const d = new Date(calendarDate + 'T00:00:00'); d.setDate(d.getDate() - 1); setCalendarDate(toLocalISO(d)); };
+  const nextDay = () => { const d = new Date(calendarDate + 'T00:00:00'); d.setDate(d.getDate() + 1); setCalendarDate(toLocalISO(d)); };
 
   if (authLoading) return <div className="min-h-screen bg-kai-dark flex items-center justify-center"><div className="text-kai-muted">Loading...</div></div>;
 
@@ -228,7 +234,7 @@ export default function Admin() {
                 <thead>
                   <tr className="bg-kai-deeper">
                     <th className="border-3 border-kai-ink px-3 py-2 text-xs font-bold text-kai-red">Time</th>
-                    {stations.map((s) => (
+                    {sortedStations.map((s) => (
                       <th key={s.id} className="border-3 border-kai-ink px-3 py-2 text-xs font-bold">{s.name}</th>
                     ))}
                   </tr>
@@ -237,7 +243,7 @@ export default function Admin() {
                   {TIME_SLOTS.map((slot) => (
                     <tr key={slot}>
                       <td className="border-3 border-kai-ink px-3 py-2 text-xs font-bold text-kai-red bg-kai-deeper whitespace-nowrap">{slot}</td>
-                      {stations.map((s) => {
+                      {sortedStations.map((s) => {
                         const booking = calendarBookings.find((b) => b.stationId === s.id && b.timeSlot === slot && b.status !== 'cancelled');
                         return (
                           <td key={s.id} className="border-3 border-kai-ink px-2 py-2">
@@ -281,7 +287,7 @@ export default function Admin() {
               <button onClick={handleCloseAll} className="btn-neo bg-kai-red text-kai-ink flex items-center gap-2 text-sm"><PowerOff size={14} /> Close All</button>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {stations.map((station) => (
+              {sortedStations.map((station) => (
                 <div key={station.id} className="card-neo p-6">
                   <div className="flex items-center justify-between mb-4">
                     <h3 className="font-bold text-lg">{station.name}</h3>
