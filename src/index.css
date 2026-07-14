@@ -1,0 +1,262 @@
+@import url('https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Google+Sans+Text:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Climate+Crisis&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Ultra&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Google Sans', 'Google Sans Text', system-ui, sans-serif;
+  background-color: #2A2B30;
+  background-image:
+    radial-gradient(1200px 600px at 100% -10%, rgba(212, 36, 36, 0.18) 0%, transparent 60%),
+    radial-gradient(900px 500px at -10% 110%, rgba(36, 212, 212, 0.12) 0%, transparent 55%);
+  background-attachment: fixed;
+  color: #F2F3F5;
+  overflow-x: hidden;
+}
+
+/* Button — pill, soft shadow, gentle lift */
+.btn-neo {
+  @apply font-semibold px-6 py-3 rounded-full shadow-neo transition-all duration-200 min-h-[44px];
+}
+.btn-neo:hover {
+  @apply -translate-y-0.5 shadow-neo-lg;
+}
+.btn-neo:active {
+  @apply translate-y-0 shadow-neo-sm;
+}
+
+/* Card — glassmorphism panel */
+.card-neo {
+  @apply rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur-xl shadow-neo;
+}
+
+/* Input — rounded, subtle border, accent focus ring */
+.input-neo {
+  @apply w-full px-4 py-3 rounded-xl border border-white/10 bg-black/20 text-kai-text transition-all;
+}
+.input-neo:focus {
+  @apply outline-none border-kai-teal ring-2 ring-kai-teal/40;
+}
+
+/* ─── Animations ─── */
+
+/* Scroll reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Staggered children reveal */
+.stagger-children > * {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+}
+.stagger-children.visible > *:nth-child(1) { transition-delay: 0ms; opacity: 1; transform: translateY(0); }
+.stagger-children.visible > *:nth-child(2) { transition-delay: 60ms; opacity: 1; transform: translateY(0); }
+.stagger-children.visible > *:nth-child(3) { transition-delay: 120ms; opacity: 1; transform: translateY(0); }
+.stagger-children.visible > *:nth-child(4) { transition-delay: 180ms; opacity: 1; transform: translateY(0); }
+.stagger-children.visible > *:nth-child(5) { transition-delay: 240ms; opacity: 1; transform: translateY(0); }
+.stagger-children.visible > *:nth-child(6) { transition-delay: 300ms; opacity: 1; transform: translateY(0); }
+.stagger-children.visible > *:nth-child(7) { transition-delay: 360ms; opacity: 1; transform: translateY(0); }
+.stagger-children.visible > *:nth-child(8) { transition-delay: 420ms; opacity: 1; transform: translateY(0); }
+.stagger-children.visible > *:nth-child(9) { transition-delay: 480ms; opacity: 1; transform: translateY(0); }
+.stagger-children.visible > *:nth-child(10) { transition-delay: 540ms; opacity: 1; transform: translateY(0); }
+.stagger-children.visible > *:nth-child(11) { transition-delay: 600ms; opacity: 1; transform: translateY(0); }
+.stagger-children.visible > *:nth-child(12) { transition-delay: 660ms; opacity: 1; transform: translateY(0); }
+.stagger-children.visible > *:nth-child(13) { transition-delay: 720ms; opacity: 1; transform: translateY(0); }
+.stagger-children.visible > *:nth-child(14) { transition-delay: 780ms; opacity: 1; transform: translateY(0); }
+.stagger-children.visible > *:nth-child(15) { transition-delay: 840ms; opacity: 1; transform: translateY(0); }
+.stagger-children.visible > *:nth-child(16) { transition-delay: 900ms; opacity: 1; transform: translateY(0); }
+
+/* Image black shadow */
+.img-shadow {
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.8)) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.6));
+}
+
+/* Floating game card */
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(var(--float-rotate, 0deg)); }
+  50% { transform: translateY(-12px) rotate(var(--float-rotate, 0deg)); }
+}
+.game-card-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+/* Card entrance */
+@keyframes card-enter {
+  from { opacity: 0; transform: translateY(40px) rotate(var(--card-rotate, 0deg)) scale(0.9); }
+  to { opacity: 1; transform: translateY(0) rotate(var(--card-rotate, 0deg)) scale(1); }
+}
+.card-enter {
+  animation: card-enter 0.6s ease-out forwards;
+  opacity: 0;
+}
+
+/* Grid background */
+.hero-grid {
+  background-image:
+    linear-gradient(rgba(68, 199, 173, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(68, 199, 173, 0.06) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+/* Teal glow utility for secondary accent highlights */
+.text-kai-teal { color: #24D4D4; }
+.border-kai-teal { border-color: #24D4D4; }
+
+/* Pulse glow for "Today" badge */
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(212, 36, 36, 0.4); }
+  50% { box-shadow: 0 0 0 8px rgba(212, 36, 36, 0); }
+}
+.pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* Step slide transition */
+.step-slide-enter {
+  animation: step-slide-in 0.35s ease-out forwards;
+}
+@keyframes step-slide-in {
+  from { opacity: 0; transform: translateX(40px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* Checkmark draw */
+@keyframes draw-check {
+  from { stroke-dashoffset: 100; }
+  to { stroke-dashoffset: 0; }
+}
+.draw-check {
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  animation: draw-check 0.6s ease-out 0.2s forwards;
+}
+
+/* Confetti burst */
+@keyframes confetti {
+  0% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 1; }
+  100% { transform: translate(var(--tx), var(--ty)) rotate(720deg) scale(0); opacity: 0; }
+}
+.confetti-particle {
+  animation: confetti 0.8s ease-out forwards;
+}
+
+/* Ripple effect */
+@keyframes ripple {
+  to { transform: scale(4); opacity: 0; }
+}
+.ripple-effect {
+  position: relative;
+  overflow: hidden;
+}
+.ripple-effect .ripple {
+  position: absolute;
+  border-radius: 0;
+  background: rgba(212, 36, 36, 0.3);
+  width: 50px;
+  height: 50px;
+  margin-top: -25px;
+  margin-left: -25px;
+  animation: ripple 0.6s ease-out;
+  pointer-events: none;
+}
+
+/* Nav underline */
+.nav-link {
+  position: relative;
+}
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 3px;
+  background: #D42424;
+  transition: width 0.2s ease;
+}
+.nav-link:hover::after,
+.nav-link.active::after {
+  width: 100%;
+}
+
+/* Flip card */
+.flip-card {
+  perspective: 1000px;
+}
+.flip-card-inner {
+  transition: transform 0.5s ease;
+  transform-style: preserve-3d;
+}
+.flip-card:hover .flip-card-inner {
+  transform: rotateY(180deg);
+}
+.flip-card-front,
+.flip-card-back {
+  backface-visibility: hidden;
+  position: absolute;
+  inset: 0;
+}
+.flip-card-back {
+  transform: rotateY(180deg);
+}
+
+/* Game reveal on hover — card drops down showing cover art */
+.game-reveal-card {
+  position: relative;
+}
+.game-reveal-card .game-reveal-img {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 20;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 0;
+  border-radius: 0 0 1rem 1rem;
+  background: #33333B;
+}
+
+/* Shake animation for busy slots */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+}
+
+/* Gallery mobile scale */
+.gallery-scale {
+  transform: scale(1);
+  transform-origin: center center;
+}
+@media (max-width: 640px) {
+  .gallery-scale {
+    transform: scale(0.55);
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
